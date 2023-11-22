@@ -28,7 +28,7 @@
     </script>
     <script>
         window.onload = function () {
-            fetch('https://api.github.com/repos/j-ghimire/gorkhaarts/contents/photos/2023-11-22')
+            fetch('https://api.github.com/repos/j-ghimire/gorkhaarts/contents/photos')
                 .then((response) => response.json())
                 .then((data) => {
                     const photoContainer = document.getElementById('photo-container');
