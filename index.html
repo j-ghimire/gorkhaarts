@@ -89,6 +89,26 @@
             background-color: #4CAF50; /* Green color for the active page */
         }
     </style>
+    <div id="photo-container">
+  <!-- Photos will be dynamically added here -->
+    </div>
+    
+    <script>
+      window.onload = function () {
+        fetch('https://api.github.com/repos/USERNAME/REPO_NAME/contents/photos')
+          .then((response) => response.json())
+          .then((data) => {
+            const photoContainer = document.getElementById('photo-container');
+            data.forEach((photo) => {
+              const img = document.createElement('img');
+              img.src = photo.download_url;
+              img.alt = 'Uploaded photo';
+              photoContainer.appendChild(img);
+            });
+          })
+          .catch((error) => console.error('Error fetching photos:', error));
+      };
+    </script>
 
     <!-- Include other content and elements as needed -->
 
