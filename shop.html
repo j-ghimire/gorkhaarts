@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Art Business - Shop</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Include Navigation -->
+    <div id="navbar"></div>
+    <style>
+        nav {
+            background-color: #333; /* Dark background color */
+            overflow: hidden;
+        }
+    
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    
+        li {
+            float: left;
+        }
+    
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+    
+        li a:hover {
+            background-color: #ddd; /* Lighter background color on hover */
+            color: black;
+        }
+    
+        .active {
+            background-color: #4CAF50; /* Green color for the active page */
+        }
+    </style>
+    <script>
+        // Load the navigation bar
+        document.getElementById("navbar").innerHTML = `
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="active"><a href="shop.html">Shop</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>`;
+    </script>
+
+    <!-- Shop Section -->
+    <section id="shop">
+        <div class="container">
+            <h2>Shop</h2>
+            <p>Explore our collection of exquisite artworks.</p>
+            <!-- Add your e-commerce elements here -->
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Your Art Business. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+
+</html

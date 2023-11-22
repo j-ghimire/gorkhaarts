@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gorkha Arts - Home</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Include the JavaScript code for admin check -->
+    <script>
+        function isAdmin() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.has('admin');
+        }
+
+        function updateContentVisibility() {
+            const isAdminUser = isAdmin();
+            if (!isAdminUser) {
+                const adminContent = document.getElementById('admin-content');
+                if (adminContent) {
+                    adminContent.style.display = 'none';
+                }
+            }
+        }
+
+        window.onload = updateContentVisibility;
+    </script>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li class="active"><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li id="admin-link"><a href="admin-dashboard.html">Admin</a></li>
+            <li id="login-link"><a href="login.html">Login</a></li>
+        </ul>
+    </nav>
+    
+
+    <!-- Your existing HTML content goes here -->
+
+    <!-- Example: Add an element with ID 'admin-content' for illustration -->
+    <div id="admin-content">
+        <!-- Content for admin users -->
+        <p>This content is only visible to admin users.</p>
+    </div>
+    <div>
+        <!-- Add your main content here -->
+        <h1>Welcome to Gorkha Arts!</h1>
+        <p>Explore our collection of artworks...</p>
+        <!-- Add more content as needed -->
+    </div>
+    <style>
+        nav {
+            background-color: #333; /* Dark background color */
+            overflow: hidden;
+        }
+    
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    
+        li {
+            float: left;
+        }
+    
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+    
+        li a:hover {
+            background-color: #ddd; /* Lighter background color on hover */
+            color: black;
+        }
+    
+        .active {
+            background-color: #4CAF50; /* Green color for the active page */
+        }
+    </style>
+
+    <!-- Include other content and elements as needed -->
+
+    <!-- Include the script for navigation links -->
+    <script>
+        document.getElementById("login-link").style.display = isAdmin() ? "none" : "block";
+        document.getElementById("admin-link").style.display = isAdmin() ? "block" : "none";
+    </script>
+</body>
+
+</html>

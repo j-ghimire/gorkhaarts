@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gorkha Arts - Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <h2>Welcome to the Admin Dashboard</h2>
+
+    <div class="post-photo-container">
+        <h3>Post a Photo</h3>
+        <form id="photo-form">
+            <label for="photo">Choose a photo:</label>
+            <input type="file" id="photo" name="photo" accept="image/*" required>
+
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+
+            <button type="button" onclick="postPhoto()">Post Photo</button>
+        </form>
+    </div>
+
+    <script src="admin-dashboard.js"></script>
+</body>
+
+</html>

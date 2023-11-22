@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gorkha Arts - Contact</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Include Navigation -->
+    <div id="navbar"></div>
+    <style>
+        nav {
+            background-color: #333; /* Dark background color */
+            overflow: hidden;
+        }
+    
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    
+        li {
+            float: left;
+        }
+    
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+    
+        li a:hover {
+            background-color: #ddd; /* Lighter background color on hover */
+            color: black;
+        }
+    
+        .active {
+            background-color: #4CAF50; /* Green color for the active page */
+        }
+    </style>
+    <script>
+        // Load the navigation bar
+        document.getElementById("navbar").innerHTML = `
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li class="active"><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>`;
+    </script>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2>Contact</h2>
+            <p>Get in touch with Gorkha Arts for any inquiries or collaborations.</p>
+            
+            <!-- Contact Information -->
+            <div class="contact-info">
+                <p>Phone: <a href="tel:+9779849855613">+977 9849855613</a></p>
+                <p>WhatsApp: <a href="https://wa.me/9779849855613" target="_blank">Chat with us on WhatsApp</a></p>
+                <p>Email: info@gorkhaarts.com</p>
+                <p>Facebook: <a href="https://www.facebook.com/gorkhaartsofficial/" target="_blank">Gorkha Arts</a></p>
+            </div>
+
+            <!-- Contact Form (if you want to include a form) -->
+            <div class="contact-form">
+                <!-- Add your contact form elements here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Gorkha Arts. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
