@@ -6,6 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gorkha Arts - Home</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Your existing styles go here */
+
+        /* Styles for the photo grid */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        /* Styles for pagination */
+        #pagination {
+            margin-top: 20px;
+        }
+
+        #pagination button {
+            margin-right: 5px;
+        }
+    </style>
 
     <!-- Include the JavaScript code for admin check -->
     <script>
@@ -88,6 +107,7 @@
     <div id="photo-container">
   <!-- Photos will be dynamically added here -->
     </div>
+    
     <div id="pagination">
         <button onclick="loadPage(1)">1</button>
         <button onclick="loadPage(2)">2</button>
