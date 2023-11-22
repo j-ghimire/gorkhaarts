@@ -9,11 +9,6 @@
 
     <!-- Include the JavaScript code for admin check -->
     <script>
-        function isAdmin() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.has('admin');
-        }
-
         function updateContentVisibility() {
             const isAdminUser = isAdmin();
             if (!isAdminUser) {
@@ -26,22 +21,7 @@
 
         window.onload = updateContentVisibility;
     </script>
-    <script>
-        window.onload = function () {
-            fetch('https://api.github.com/repos/j-ghimire/gorkhaarts/contents/photos')
-                .then((response) => response.json())
-                .then((data) => {
-                    const photoContainer = document.getElementById('photo-container');
-                    data.forEach((photo) => {
-                        const img = document.createElement('img');
-                        img.src = photo.download_url;
-                        img.alt = 'Uploaded photo';
-                        photoContainer.appendChild(img);
-                    });
-                })
-                .catch((error) => console.error('Error fetching photos:', error));
-        };
-    </script>
+   
 </head>
 
 <body>
@@ -118,24 +98,7 @@
         document.getElementById("login-link").style.display = isAdmin() ? "none" : "block";
         document.getElementById("admin-link").style.display = isAdmin() ? "block" : "none";
     </script>
-    <script>
-        window.onload = function () {
-            fetch('https://api.github.com/repos/j-ghimire/gorkhaarts/contents/photos')
-                .then((response) => response.json())
-                .then((data) => {
-                    const photoContainer = document.getElementById('photo-container');
-                    data.forEach((photo) => {
-                        const img = document.createElement('img');
-                        img.src = photo.download_url;
-                        img.alt = 'Uploaded photo';
-                        img.style.width = '300px'; // You can adjust the width
-                        img.style.margin = '10px'; // Add some margin between images
-                        photoContainer.appendChild(img);
-                    });
-                })
-                .catch((error) => console.error('Error fetching photos:', error));
-        };
-    </script>
+   
 </body>
 
 </html>
