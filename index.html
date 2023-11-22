@@ -88,7 +88,13 @@
     <div id="photo-container">
   <!-- Photos will be dynamically added here -->
     </div>
+    <div id="pagination">
+        <button onclick="loadPage(1)">1</button>
+        <button onclick="loadPage(2)">2</button>
+        <!-- Add more buttons for additional pages as needed -->
+    </div>
     
+        
 
 
     <!-- Include other content and elements as needed -->
@@ -98,6 +104,7 @@
         document.getElementById("login-link").style.display = isAdmin() ? "none" : "block";
         document.getElementById("admin-link").style.display = isAdmin() ? "block" : "none";
     </script>
+    <script src="app.js"></script>
    
 </body>
 
