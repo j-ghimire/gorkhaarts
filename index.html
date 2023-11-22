@@ -6,6 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gorkha Arts - Home</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        #photo-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        #photo-container img {
+            width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        #photo-container img:hover {
+            transform: scale(1.1);
+        }
+
+        #pagination {
+            margin-top: 20px;
+        }
+
+        #pagination button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+    </style>
     <script>
         // Global variable to store all fetched photos
         let allPhotos = [];
@@ -182,7 +217,6 @@
     <div id="photo-container">
   <!-- Photos will be dynamically added here -->
     </div>
-    
     <div id="pagination">
         <button onclick="loadPage(1)">1</button>
         <button onclick="loadPage(2)">2</button>
