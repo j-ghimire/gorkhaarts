@@ -6,6 +6,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gorkha Arts - Home</title>
     <link rel="stylesheet" href="styles.css">
+    <script>
+        // Global variable to store all fetched photos
+        let allPhotos = [];
+
+        // Function to load and display photos based on the selected page
+        function loadPage(page) {
+            const photosPerPage = 10;
+            const startIndex = (page - 1) * photosPerPage;
+            const endIndex = startIndex + photosPerPage;
+            const currentPhotos = allPhotos.slice(startIndex, endIndex);
+
+            // Update the photo grid with the current set of photos
+            updatePhotoGrid(currentPhotos);
+        }
+
+        // Function to update the photo grid with the given photos
+        function updatePhotoGrid(photos) {
+            const photoContainer = document.getElementById('photo-container');
+            photoContainer.innerHTML = ''; // Clear existing content
+
+            photos.forEach((photo) => {
+                const img = document.createElement('img');
+                img.src = photo.download_url;
+                img.alt = 'Uploaded photo';
+                img.onclick = function () {
+                    // Implement logic for displaying a larger view of the clicked photo
+                };
+
+                photoContainer.appendChild(img);
+            });
+        }
+
+        window.onload = function () {
+            // Fetch all photos and store them in the global variable
+            fetch('https://api.github.com/repos/j-ghimire/gorkhaarts/contents/photos')
+                .then((response) => response.json())
+                .then((data) => {
+                    allPhotos = data;
+                    const totalPages = Math.ceil(allPhotos.length / 10);
+
+                    // Display pagination only if there are more than 10 photos
+                    const pagination = document.getElementById('pagination');
+                    if (totalPages > 1) {
+                        // Create pagination buttons dynamically
+                        for (let i = 1; i <= totalPages; i++) {
+                            const button = document.createElement('button');
+                            button.textContent = i;
+                            button.onclick = function () {
+                                loadPage(i);
+                            };
+                            pagination.appendChild(button);
+                        }
+                    } else {
+                        pagination.style.display = 'none'; // Hide pagination if there are fewer than 10 photos
+                    }
+
+                    // Load and display the first page of photos
+                    loadPage(1);
+                })
+                .catch((error) => console.error('Error fetching photos:', error));
+        };
+    </script>
+
+    <!-- Include the external JavaScript file -->
+    <script src="app.js"></script>
     <style>
         /* Your existing styles go here */
 
@@ -15,14 +80,24 @@
             grid-template-columns: repeat(5, 1fr);
             gap: 20px;
         }
+        .photo-grid img {
+            width: 100%; /* Ensure images take 100% of the container width */
+            height: auto; /* Maintain the aspect ratio */
+            border-radius: 8px; /* Add border radius for a nicer look */
+            cursor: pointer; /* Add a cursor pointer for better user experience */
+        }
+
 
         /* Styles for pagination */
         #pagination {
             margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-
         #pagination button {
-            margin-right: 5px;
+            margin: 0 5px;
+            cursor: pointer;
         }
     </style>
 
