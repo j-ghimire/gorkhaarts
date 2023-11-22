@@ -26,6 +26,22 @@
 
         window.onload = updateContentVisibility;
     </script>
+    <script>
+        window.onload = function () {
+            fetch('https://api.github.com/repos/j-ghimire/gorkhaarts/contents/photos')
+                .then((response) => response.json())
+                .then((data) => {
+                    const photoContainer = document.getElementById('photo-container');
+                    data.forEach((photo) => {
+                        const img = document.createElement('img');
+                        img.src = photo.download_url;
+                        img.alt = 'Uploaded photo';
+                        photoContainer.appendChild(img);
+                    });
+                })
+                .catch((error) => console.error('Error fetching photos:', error));
+        };
+    </script>
 </head>
 
 <body>
