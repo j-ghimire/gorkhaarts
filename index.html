@@ -141,7 +141,7 @@
 
                 <br>
                 <button onclick="closeForm()">Close Form</button>
-                <button onclick="submitForm()" style="background-color: #4CAF50; color: white; margin-top: 10px; padding: 10px; cursor: pointer;">Next</button>
+                <button id="redirectButton style="background-color: #4CAF50; color: white; margin-top: 10px; padding: 10px; cursor: pointer;">Next</button>
             </div>
         </div>
     </div>
@@ -179,14 +179,10 @@
         function closeForm() {
             document.getElementById("formOverlay").style.display = "none";
         }
-        function submitForm() {
-            baseURL='www.facebook.com;
-            // Collect form data
-             history.replaceState({}, document.title, baseURL);
-
-  // Redirect the user to the external website
-            
-        }
+        document.getElementById('redirectButton').addEventListener('click', function() {
+    // Redirect to Facebook
+            window.location.href = 'https://www.facebook.com';
+        });
     </script>
 </body>
 </html>
