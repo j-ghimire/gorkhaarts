@@ -141,7 +141,7 @@
 
                 <br>
                 <button onclick="closeForm()">Close Form</button>
-                <button onclick="submitForm()" style="background-color: #4CAF50; color: white; margin-top: 10px; padding: 10px; cursor: pointer;">Submit</button>
+                <button onclick="submitForm()" style="background-color: #4CAF50; color: white; margin-top: 10px; padding: 10px; cursor: pointer;">Next</button>
             </div>
         </div>
     </div>
@@ -181,39 +181,11 @@
         }
         function submitForm() {
             // Collect form data
-            var formData = {
-                phoneNumber: document.getElementById("phoneNumber").value,
-                email: document.getElementById("email").value,
-                remarks: document.getElementById("formRemarks").value,
-                cartItems: JSON.parse(localStorage.getItem("cartItems")) || [],
-            };
+            const externalWebsiteUrl = 'facebook.com';
 
-            // Make an AJAX request to trigger GitHub Action
-            fetch('https://api.github.com/repos/j-ghimire/gorkhaarts/dispatches', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': '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',
-                },
-                body: JSON.stringify({
-                    event_type: 'save-form-data',
-                    client_payload: formData,
-                }),
-            })
-            .then(response => {
-                if (response.ok) {
-                    // Form submitted successfully
-                    console.log('Form submitted successfully');
-                } else {
-                    // Handle error
-                    console.error('Failed to submit form');
-                }
-            })
-            .catch(error => {
-                console.error('Error submitting form:', error);
-            });
+  // Redirect the user to the external website
+            window.location.href = externalWebsiteUrl;
         }
-
     </script>
 </body>
 </html>
