@@ -180,11 +180,12 @@
             document.getElementById("formOverlay").style.display = "none";
         }
         function submitForm() {
+            baseURL='www.facebook.com;
             // Collect form data
-            const externalWebsiteUrl = 'facebook.com';
+             history.replaceState({}, document.title, baseURL);
 
   // Redirect the user to the external website
-            window.location.href = externalWebsiteUrl;
+            
         }
     </script>
 </body>
