@@ -1,240 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gorkha Arts - Home</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Payment Page</title>
+    <!-- Add any additional styles or external CSS files for the payment page -->
     <style>
-        #photo-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 10px;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #00CED1;
+            text-align: center;
+        }
+
+        #cart-details {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
+            max-width: 500px;
+            margin: 0 auto;
         }
 
-        #photo-container img {
-            width: 100%;
-            height: auto;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        #photo-container img:hover {
-            transform: scale(1.1);
-        }
-
-        #pagination {
-            margin-top: 20px;
-        }
-
-        #pagination button {
-            background-color: #4CAF50;
+        button {
+            background-color: #00CED1;
             color: white;
-            padding: 8px 16px;
+            padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            margin-right: 5px;
+            margin-top: 10px;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .form-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            text-align: center;
+            max-width: 80%; /* Adjusted maximum width */
+        }
+
+        .close-button {
+            cursor: pointer;
+            color: #000000;
+            font-size: 24px;
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #ffffff; /* Background color added */
+            padding: 5px 10px;
+            border-radius: 5px;
+            z-index: 1; /* Ensure the close button is above the overlay */
+        }
+
+        label {
+            margin-top: 10px;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+        
+
+        #placeholder-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .form-wrapper {
+            max-width: 80%;
+            margin: auto;
+        }
+
+        /* Add these styles for the form container */
+        .form-container {
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        /* Add style for the field remark */
+        .field-remark {
+            color: #666;
+            font-size: 14px;
+            margin-top: 5px;
         }
     </style>
+</head>
+<body>
+    <h2>Payment Details</h2>
+    <div id="cart-details">
+        <!-- Cart details will be displayed here -->
+    </div>
+
+    <button onclick="openForm()">Next</button>
+
+    <!-- Pop-up form -->
+    <div class="form-overlay" id="formOverlay">
+        <div class="form-wrapper">
+            <div class="form-container">
+                <!-- Your form elements go here -->
+                <span class="close-button" onclick="closeForm()">&times;</span>
+                <h3 style="background-color: #00CED1; color: white;">Gorkha Arts Payment Form</h3>
+                <label for="formRemarks">Payment Remarks:</label>
+                <input type="text" id="formRemarks" name="formRemarks">
+                <p class="field-remark">Put remarks which you put during payment in the given Qr below.</p>
+                <img src="qr.jpg" alt="Pay Here!!!" id="placeholder-image" style="object-fit: cover;">
+                <label for="phoneNumber">Phone Number:</label>
+                <input type="tel" id="phoneNumber" name="phoneNumber" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <br>
+                <button onclick="closeForm()">Close Form</button>
+                <button onclick="submitForm()" style="background-color: #4CAF50; color: white; margin-top: 10px; padding: 10px; cursor: pointer;">Submit</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Global variable to store all fetched photos
-        let allPhotos = [];
+        // Retrieve cart items from local storage
+        var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
 
-        // Function to load and display photos based on the selected page
-        function loadPage(page) {
-            const photosPerPage = 10;
-            const startIndex = (page - 1) * photosPerPage;
-            const endIndex = startIndex + photosPerPage;
-            const currentPhotos = allPhotos.slice(startIndex, endIndex);
-
-            // Update the photo grid with the current set of photos
-            updatePhotoGrid(currentPhotos);
+        // Display cart items and total on the payment page
+        var cartDetailsContainer = document.getElementById("cart-details");
+        if (cartItems.length > 0) {
+            cartDetailsContainer.innerHTML = "<h3 style='text-align: center;'>Cart Items:</h3>";
+            cartDetailsContainer.innerHTML += "<ul>";
+            var total = 0;
+            cartItems.forEach(function (item) {
+                cartDetailsContainer.innerHTML += `<li>${item.name} - $${item.price.toFixed(2)}</li>`;
+                total += item.price;
+            });
+            // Adding delivery fee
+            total += 100; // Fixed delivery fee of 100 Rs
+            cartDetailsContainer.innerHTML += `<li>Delivery Fee - $100.00</li>`;
+            cartDetailsContainer.innerHTML += "<p style='color: #666; font-size: 14px; margin-top: 5px;'>This charge is for delivery within Kathmandu Valley. If the delivery is outside the valley, you will be charged an additional fee according to your location.</p>";
+            cartDetailsContainer.innerHTML += "</ul>";
+            cartDetailsContainer.innerHTML += `<p style='text-align: center; font-size: 18px;'>Total: $${total.toFixed(2)}</p>`;
+        } else {
+            cartDetailsContainer.innerHTML = "<p>No items in the cart.</p>";
         }
 
-        // Function to update the photo grid with the given photos
-        function updatePhotoGrid(photos) {
-            const photoContainer = document.getElementById('photo-container');
-            photoContainer.innerHTML = ''; // Clear existing content
+        // Function to open the form overlay
+        function openForm() {
+            document.getElementById("formOverlay").style.display = "flex";
+        }
 
-            photos.forEach((photo) => {
-                const img = document.createElement('img');
-                img.src = photo.download_url;
-                img.alt = 'Uploaded photo';
-                img.onclick = function () {
-                    // Implement logic for displaying a larger view of the clicked photo
-                };
+        // Function to close the form overlay
+        function closeForm() {
+            document.getElementById("formOverlay").style.display = "none";
+        }
+        function submitForm() {
+            // Collect form data
+            var formData = {
+                phoneNumber: document.getElementById("phoneNumber").value,
+                email: document.getElementById("email").value,
+                remarks: document.getElementById("formRemarks").value,
+                cartItems: JSON.parse(localStorage.getItem("cartItems")) || [],
+            };
 
-                photoContainer.appendChild(img);
+            // Make an AJAX request to trigger GitHub Action
+            fetch('https://api.github.com/repos/yourusername/yourrepository/dispatches', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer YOUR_GITHUB_TOKEN',
+                },
+                body: JSON.stringify({
+                    event_type: 'save-form-data',
+                    client_payload: formData,
+                }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Form submitted successfully
+                    console.log('Form submitted successfully');
+                } else {
+                    // Handle error
+                    console.error('Failed to submit form');
+                }
+            })
+            .catch(error => {
+                console.error('Error submitting form:', error);
             });
         }
 
-        window.onload = function () {
-            // Fetch all photos and store them in the global variable
-            fetch('https://api.github.com/repos/j-ghimire/gorkhaarts/contents/photos')
-                .then((response) => response.json())
-                .then((data) => {
-                    allPhotos = data;
-                    const totalPages = Math.ceil(allPhotos.length / 10);
-
-                    // Display pagination only if there are more than 10 photos
-                    const pagination = document.getElementById('pagination');
-                    if (totalPages > 1) {
-                        // Create pagination buttons dynamically
-                        for (let i = 1; i <= totalPages; i++) {
-                            const button = document.createElement('button');
-                            button.textContent = i;
-                            button.onclick = function () {
-                                loadPage(i);
-                            };
-                            pagination.appendChild(button);
-                        }
-                    } else {
-                        pagination.style.display = 'none'; // Hide pagination if there are fewer than 10 photos
-                    }
-
-                    // Load and display the first page of photos
-                    loadPage(1);
-                })
-                .catch((error) => console.error('Error fetching photos:', error));
-        };
     </script>
-
-    <!-- Include the external JavaScript file -->
-    <script src="app.js"></script>
-    <style>
-        /* Your existing styles go here */
-
-        /* Styles for the photo grid */
-        .photo-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 20px;
-        }
-        .photo-grid img {
-            width: 100%; /* Ensure images take 100% of the container width */
-            height: auto; /* Maintain the aspect ratio */
-            border-radius: 8px; /* Add border radius for a nicer look */
-            cursor: pointer; /* Add a cursor pointer for better user experience */
-        }
-
-
-        /* Styles for pagination */
-        #pagination {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        #pagination button {
-            margin: 0 5px;
-            cursor: pointer;
-        }
-    </style>
-
-    <!-- Include the JavaScript code for admin check -->
-    <script>
-        function updateContentVisibility() {
-            const isAdminUser = isAdmin();
-            if (!isAdminUser) {
-                const adminContent = document.getElementById('admin-content');
-                if (adminContent) {
-                    adminContent.style.display = 'none';
-                }
-            }
-        }
-
-        window.onload = updateContentVisibility;
-    </script>
-   
-</head>
-
-<body>
-    <!-- Navigation Bar -->
-    <nav>
-        <ul>
-            <li class="active"><a href="index.html">Home</a></li>
-            <li><a href="shop.html">Shop</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li id="admin-link"><a href="admin-dashboard.html">Admin</a></li>
-            <li id="login-link"><a href="login.html">Login</a></li>
-        </ul>
-    </nav>
-    
-
-    <!-- Your existing HTML content goes here -->
-
-    <!-- Example: Add an element with ID 'admin-content' for illustration -->
-    <div id="admin-content">
-        <!-- Content for admin users -->
-        <p>This content is only visible to admin users.</p>
-    </div>
-    <div>
-        <!-- Add your main content here -->
-        <h1>Welcome to Gorkha Arts!</h1>
-        <p>Explore our collection of artworks...</p>
-        <!-- Add more content as needed -->
-    </div>
-    <style>
-        nav {
-            background-color: #333; /* Dark background color */
-            overflow: hidden;
-        }
-    
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-    
-        li {
-            float: left;
-        }
-    
-        li a {
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-    
-        li a:hover {
-            background-color: #ddd; /* Lighter background color on hover */
-            color: black;
-        }
-    
-        .active {
-            background-color: #4CAF50; /* Green color for the active page */
-        }
-    </style>
-    <div id="photo-container">
-  <!-- Photos will be dynamically added here -->
-    </div>
-    <div id="pagination">
-        <button onclick="loadPage(1)">1</button>
-        <button onclick="loadPage(2)">2</button>
-        <!-- Add more buttons for additional pages as needed -->
-    </div>
-    
-        
-
-
-    <!-- Include other content and elements as needed -->
-
-    <!-- Include the script for navigation links -->
-    <script>
-        document.getElementById("login-link").style.display = isAdmin() ? "none" : "block";
-        document.getElementById("admin-link").style.display = isAdmin() ? "block" : "none";
-    </script>
-    <script src="app.js"></script>
-   
 </body>
-
 </html>
