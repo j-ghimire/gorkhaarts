@@ -1,1 +1,18 @@
+name: Form Submission Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  save-form-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Save Form Data
+        run: echo "${{ toJSON(github.event.client_payload) }}" > data/form-submissions.json
+        if: github.event_name == 'repository_dispatch'
 
